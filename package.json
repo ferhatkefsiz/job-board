@@ -4,12 +4,15 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "predev": "rm -rf .next",
     "build": "next build",
     "start": "next start",
     "format": "npx prettier --write .",
+    "reset": "rm -rf node_modules && rm -rf .next && pnpm i",
     "lint": "next lint"
   },
   "dependencies": {
+    "@workos-inc/authkit-nextjs": "^0.11.1",
     "next": "14.2.13",
     "react": "^18",
     "react-dom": "^18"
