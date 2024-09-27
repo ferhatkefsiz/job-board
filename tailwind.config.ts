@@ -1,19 +1,22 @@
-import type { Config } from "tailwindcss"
-
-const config: Config = {
-  content: [
-    "./pages/**/*.{js,ts,jsx,tsx,mdx}",
-    "./components/**/*.{js,ts,jsx,tsx,mdx}",
-    "./app/**/*.{js,ts,jsx,tsx,mdx}"
-  ],
+const config = {
+  darkMode: ["class"],
+  content: ["./app/**/**/*.{ts,tsx}", "./components/**/*.{ts,tsx}", "./modules/**/*.{ts,tsx}"],
   theme: {
     extend: {
-      colors: {
-        background: "var(--background)",
-        foreground: "var(--foreground)"
+      container: {
+        screens: {
+          lg: "768px",
+          xl: "768px",
+          "2xl": "768px"
+        },
+        center: true,
+        padding: {
+          DEFAULT: "0.75rem"
+        }
       }
     }
   },
   plugins: []
 }
+
 export default config
