@@ -30,10 +30,7 @@ export default async function Home() {
 
   return (
     <>
-      <div className="container">
-        <Hero />
-      </div>
-
+      <Hero />
       <JobBoard header={"Jobs"} jobs={latestJobs} />
     </>
   )
