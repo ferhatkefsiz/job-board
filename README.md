@@ -49,6 +49,10 @@ After logging in, go to the Dashboard, Click on Create New Project Give your pro
 
 Once the project is created, you'll be directed to the project settings. Under the API Keys section, you'll find your Client ID and Secret Key. Copy these keys, as they will be required in your application’s environment file (`.env.local`).
 
+### Create Role
+
+Go to the Roles section in the WorkOS Dashboard, click on Create Role, and give your role a name (e.g. "Employer", "Job Seeker"). You can also add permissions to the role.
+
 ### Run the development server
 
 ```bash
