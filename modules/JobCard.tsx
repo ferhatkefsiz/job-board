@@ -38,7 +38,7 @@ export default function JobCard({ jobDoc }: { jobDoc: Job }) {
               </Link>
             </div>
             <div className="font-bold text-lg mb-1">
-              <Link className="hover:underline" href={"/show/" + jobDoc._id}>
+              <Link className="hover:underline" href={"/post/" + jobDoc._id}>
                 {jobDoc.title}
               </Link>
             </div>
