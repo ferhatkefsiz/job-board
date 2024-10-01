@@ -39,7 +39,7 @@ export default async function Header() {
             </form>
           )}
 
-          <Link className="rounded-md py-1 px-2 sm:py-2 sm:px-4 bg-blue-600 text-white" href={"/new-listing"}>
+          <Link className="rounded-md py-1 px-2 sm:py-2 sm:px-4 bg-blue-600 text-white" href="/organizations">
             Post a job
           </Link>
         </nav>
