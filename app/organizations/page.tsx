@@ -36,7 +36,6 @@ export default async function OrganizationsListPage() {
   return (
     <div className="container">
       <div>
-        <pre>{JSON.stringify(organizationMemberships, null, 2)}</pre>
         <h2 className="text-lg mt-6">Your companies</h2>
         <p className="text-gray-500 text-sm mb-2">Select a organization to create a job add for</p>
         <div>
