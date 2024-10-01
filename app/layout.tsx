@@ -7,6 +7,7 @@ import Header from "@/modules/Header"
 import Footer from "@/modules/Footer"
 
 import "./globals.css"
+import "@radix-ui/themes/styles.css"
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
