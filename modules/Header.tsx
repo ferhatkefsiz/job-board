@@ -2,27 +2,39 @@ import Link from "next/link"
 
 import { getSignInUrl, getSignUpUrl, withAuth, signOut } from "@workos-inc/authkit-nextjs"
 
+import Button from "@/components/ui/button"
+import ThemeSwitcher from "@/components/ThemeSwitcher"
+
 export default async function Header() {
   const { user } = await withAuth()
   const signInUrl = await getSignInUrl()
   const signUpUrl = await getSignUpUrl()
 
   return (
-    <header>
-      <div className="container flex items-center justify-between mx-auto my-4">
-        <Link href={"/"} className="font-bold text-xl">
-          Job Board
-        </Link>
-        <nav className="flex gap-2">
+    <header className="group feedback-bg fixed inset-x-0 z-10 border-b bg-white/50 backdrop-blur-3xl lg:relative lg:border-transparent dark:bg-gray-925/50">
+      <div className="container flex justify-between py-4 lg:py-8">
+        <div className="flex items-center gap-8">
+          <div className="flex w-full items-center justify-between lg:w-fit">
+            <a href="/" aria-label="Go home">
+              Job Board
+            </a>
+          </div>
+        </div>
+
+        <div className="gap-4 flex">
           {!user && (
-            <Link className="rounded-md bg-gray-200 py-1 px-2 sm:py-2 sm:px-4" href={signInUrl}>
-              Login
+            <Link href={signInUrl} passHref legacyBehavior>
+              <Button.Root size="xs" intent="gray" variant="outlined">
+                <Button.Label>Login</Button.Label>
+              </Button.Root>
             </Link>
           )}
 
           {!user && (
-            <Link className="rounded-md bg-gray-200 py-1 px-2 sm:py-2 sm:px-4" href={signUpUrl}>
-              Register
+            <Link href={signUpUrl} passHref legacyBehavior>
+              <Button.Root size="xs" intent="neutral">
+                <Button.Label>Register</Button.Label>
+              </Button.Root>
             </Link>
           )}
 
@@ -33,16 +45,20 @@ export default async function Header() {
                 await signOut()
               }}
             >
-              <button type="submit" className="rounded-md bg-gray-200 py-1 px-2 sm:py-2 sm:px-4">
-                Logout, {user.firstName}
-              </button>
+              <Button.Root size="xs" intent="neutral">
+                <Button.Label> Logout, {user.firstName}</Button.Label>
+              </Button.Root>
             </form>
           )}
 
-          <Link className="rounded-md py-1 px-2 sm:py-2 sm:px-4 bg-blue-600 text-white" href="/organizations">
-            Post a job
+          <Link href={"/organizations"} passHref legacyBehavior>
+            <Button.Root size="xs" intent="primary">
+              <Button.Label>Post a job</Button.Label>
+            </Button.Root>
           </Link>
-        </nav>
+
+          <ThemeSwitcher size="xs" />
+        </div>
       </div>
     </header>
   )
