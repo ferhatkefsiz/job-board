@@ -27,12 +27,15 @@ export default function ImageUpload({
     const input = ev.target as HTMLInputElement
     if (input && input.files?.length && input.files.length > 0) {
       setIsUploading(true)
+
       const file = input.files[0]
       const data = new FormData()
       data.set("file", file)
+
       const response = await axios.post("/api/upload", data)
-      if (response.data.url) {
-        setUrl(response.data.url)
+
+      if (response.data.imgUrl) {
+        setUrl(response.data.imgUrl)
         setIsUploading(false)
         setIsImageLoading(true)
       }
@@ -45,6 +48,7 @@ export default function ImageUpload({
     <>
       <div className="bg-gray-100 rounded-md size-24 inline-flex items-center content-center justify-center">
         {imgLoading && <FontAwesomeIcon icon={faSpinner} className="text-gray-400 animate-spin" />}
+
         {!isUploading && url && (
           <Image
             src={url}
@@ -55,6 +59,7 @@ export default function ImageUpload({
             className="w-auto h-auto max-w-24 max-h-24"
           />
         )}
+
         {!imgLoading && !url && <FontAwesomeIcon icon={icon} className="text-gray-400" />}
       </div>
 
