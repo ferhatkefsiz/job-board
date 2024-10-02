@@ -37,7 +37,7 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" data-palette="trust" data-shade="900" data-rounded="large">
       <body
         className={cn(
           geistMono.variable,
@@ -48,7 +48,7 @@ export default function RootLayout({
         <AuthKitProvider>
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
             <Header />
-            {children}
+            <div className="pt-32 lg:pt-2">{children}</div>
             <Footer />
           </ThemeProvider>
         </AuthKitProvider>
