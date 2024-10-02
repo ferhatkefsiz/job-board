@@ -3,15 +3,19 @@
 import { useState } from "react"
 import { redirect } from "next/navigation"
 import { saveJobAction } from "@/app/actions/job"
-
-import ImageUpload from "@/components/ImageUpload"
-import type { Job } from "@/models/Job"
-import { faEnvelope, faPhone, faStar, faUser } from "@fortawesome/free-solid-svg-icons"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { Button, RadioGroup, TextArea, TextField, Theme } from "@radix-ui/themes"
-
 import { CitySelect, CountrySelect, StateSelect } from "react-country-state-city"
 import "react-country-state-city/dist/react-country-state-city.css"
+
+import type { Job } from "@/models/Job"
+
+import ImageUpload from "@/components/ImageUpload"
+import Button from "@/components/ui/button"
+import RadioGroup from "@/components/ui/radio-group"
+import { Input } from "@/components/ui/input"
+import Textarea from "@/components/ui/text-area"
+
+import { Caption, Display, Text } from "@/components/ui/typography"
+import Label from "@/components/ui/label"
 
 export default function JobForm({ orgId, jobDoc }: { orgId: string; jobDoc?: Job }) {
   const [countryId, setCountryId] = useState(jobDoc?.countryId || 0)
@@ -34,37 +38,82 @@ export default function JobForm({ orgId, jobDoc }: { orgId: string; jobDoc?: Job
   }
 
   return (
-    <Theme>
-      <form action={handleSaveJob} className="container mt-6 flex flex-col gap-4">
-        {jobDoc && <input type="hidden" name="id" value={jobDoc?._id} />}
-        <TextField.Root name="title" placeholder="Job title" defaultValue={jobDoc?.title || ""} />
-        <div className="grid sm:grid-cols-3 gap-6 *:grow">
-          <div>
-            Remote?
-            <RadioGroup.Root defaultValue={jobDoc?.remote || "hybrid"} name="remote">
-              <RadioGroup.Item value="onsite">On-site</RadioGroup.Item>
-              <RadioGroup.Item value="hybrid">Hybrid-remote</RadioGroup.Item>
-              <RadioGroup.Item value="remote">Fully remote</RadioGroup.Item>
+    <div className="container">
+      <Display size="4xl">Add a new Job</Display>
+
+      <form action={handleSaveJob} className="flex flex-col gap-8 mt-6">
+        {jobDoc && <Input type="hidden" name="id" value={jobDoc?._id} />}
+
+        <div className="space-y-2 *:has-[:disabled]:opacity-50 *:has-[:disabled]:pointer-events-none">
+          <Label htmlFor="title" className="font-medium text-lg text-body">
+            Job Title
+          </Label>
+          <Input id="title" name="title" defaultValue={jobDoc?.title || ""} />
+        </div>
+
+        <div className="grid sm:grid-cols-3 gap-10 *:grow">
+          <div className="space-y-2">
+            <Text className="mt-0 font-medium text-lg">Job Location</Text>
+            <RadioGroup.Root className="space-y-1" defaultValue={jobDoc?.remote || "hybrid"} name="remote">
+              <div className="flex gap-2 items-center">
+                <RadioGroup.Item value="onsite" id="onsite">
+                  <RadioGroup.Indicator />
+                </RadioGroup.Item>
+                <Label htmlFor="onsite">On-site</Label>
+              </div>
+
+              <div className="flex gap-2 items-center">
+                <RadioGroup.Item value="hybrid" id="hybrid">
+                  <RadioGroup.Indicator />
+                </RadioGroup.Item>
+                <Label htmlFor="hybrid">Hybrid-remote</Label>
+              </div>
+
+              <div className="flex gap-2 items-center">
+                <RadioGroup.Item value="remote" id="remote">
+                  <RadioGroup.Indicator />
+                </RadioGroup.Item>
+                <Label htmlFor="remote">Fully remote</Label>
+              </div>
             </RadioGroup.Root>
           </div>
-          <div>
-            Full time?
-            <RadioGroup.Root defaultValue={jobDoc?.type || "full"} name="type">
-              <RadioGroup.Item value="project">Project</RadioGroup.Item>
-              <RadioGroup.Item value="part">Part-time</RadioGroup.Item>
-              <RadioGroup.Item value="full">Full-time</RadioGroup.Item>
+
+          <div className="space-y-2">
+            <Text className="mt-0 font-medium text-lg text-body"> Job Type</Text>
+            <RadioGroup.Root className="space-y-1" defaultValue={jobDoc?.type || "full"} name="type">
+              <div className="flex gap-2 items-center">
+                <RadioGroup.Item value="project" id="project">
+                  <RadioGroup.Indicator />
+                </RadioGroup.Item>
+                <Label htmlFor="project">Project</Label>
+              </div>
+
+              <div className="flex gap-2 items-center">
+                <RadioGroup.Item value="part" id="part">
+                  <RadioGroup.Indicator />
+                </RadioGroup.Item>
+                <Label htmlFor="part">Part-time</Label>
+              </div>
+
+              <div className="flex gap-2 items-center">
+                <RadioGroup.Item value="full" id="full">
+                  <RadioGroup.Indicator />
+                </RadioGroup.Item>
+                <Label htmlFor="full">Full-time</Label>
+              </div>
             </RadioGroup.Root>
           </div>
-          <div>
-            Salary
-            <TextField.Root name="salary" defaultValue={jobDoc?.salary || ""}>
-              <TextField.Slot>$</TextField.Slot>
-              <TextField.Slot>k/year</TextField.Slot>
-            </TextField.Root>
+
+          <div className="space-y-2">
+            <Label htmlFor="salary" className="font-medium text-lg text-body">
+              Salary
+            </Label>
+            <Input name="salary" defaultValue={jobDoc?.salary || ""} />
+            <Caption>$ k/year</Caption>
           </div>
         </div>
         <div>
-          Location
+          <Text className="font-medium text-lg mt-0">Location</Text>
           <div className="flex flex-col sm:flex-row gap-4 *:grow">
             <CountrySelect
               defaultValue={countryId ? { id: countryId, name: countryName } : 0}
@@ -97,61 +146,41 @@ export default function JobForm({ orgId, jobDoc }: { orgId: string; jobDoc?: Job
         </div>
 
         <div className="sm:flex">
-          <div className="w-1/3">
-            <h3>Job icon</h3>
-            <ImageUpload name="jobIcon" icon={faStar} defaultValue={jobDoc?.jobIcon || ""} />
+          <div className="w-1/3 space-y-3">
+            <Text className="font-medium text-lg mt-0">Company Logo</Text>
+            <ImageUpload name="jobIcon" defaultValue={jobDoc?.jobIcon || ""} />
           </div>
 
-          <div className="grow">
-            <h3>Contact person</h3>
+          <div className="grow space-y-3">
+            <Text className="font-medium text-lg mt-0">HR Contact Information</Text>
+
             <div className="flex gap-2">
               <div className="">
-                <ImageUpload name="contactPhoto" icon={faUser} defaultValue={jobDoc?.contactPhoto || ""} />
+                <ImageUpload name="contactPhoto" defaultValue={jobDoc?.contactPhoto || ""} />
               </div>
-              <div className="grow flex flex-col gap-1">
-                <TextField.Root placeholder="John Doe" name="contactName" defaultValue={jobDoc?.contactName || ""}>
-                  <TextField.Slot>
-                    <FontAwesomeIcon icon={faUser} />
-                  </TextField.Slot>
-                </TextField.Root>
-                <TextField.Root
-                  placeholder="Phone"
-                  type="tel"
-                  name="contactPhone"
-                  defaultValue={jobDoc?.contactPhone || ""}
-                >
-                  <TextField.Slot>
-                    <FontAwesomeIcon icon={faPhone} />
-                  </TextField.Slot>
-                </TextField.Root>
-                <TextField.Root
-                  placeholder="Email"
-                  type="email"
-                  name="contactEmail"
-                  defaultValue={jobDoc?.contactEmail || ""}
-                >
-                  <TextField.Slot>
-                    <FontAwesomeIcon icon={faEnvelope} />
-                  </TextField.Slot>
-                </TextField.Root>
+              <div className="grow flex flex-col gap-2">
+                <Input placeholder="John Doe" name="contactName" defaultValue={jobDoc?.contactName || ""} />
+                <Input placeholder="Phone" type="tel" name="contactPhone" defaultValue={jobDoc?.contactPhone || ""} />
+                <Input placeholder="Email" type="email" name="contactEmail" defaultValue={jobDoc?.contactEmail || ""} />
               </div>
             </div>
           </div>
         </div>
 
-        <TextArea
-          defaultValue={jobDoc?.description || ""}
-          placeholder="Job description"
-          resize="vertical"
-          name="description"
-        />
+        <div className="space-y-2 *:has-[:disabled]:opacity-50 *:has-[:disabled]:pointer-events-none">
+          <Label htmlFor="description" className="font-medium text-lg text-body">
+            Job Description
+          </Label>
 
-        <div className="flex justify-center">
-          <Button size="3">
-            <span className="px-8">Save</span>
-          </Button>
+          <Textarea defaultValue={jobDoc?.description || ""} id="description" name="description" />
+        </div>
+
+        <div>
+          <Button.Root>
+            <Button.Label>Publish Job</Button.Label>
+          </Button.Root>
         </div>
       </form>
-    </Theme>
+    </div>
   )
 }
