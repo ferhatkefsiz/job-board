@@ -1,73 +1,90 @@
 "use client"
 
 import axios from "axios"
-import Link from "next/link"
+import { Link } from "@/components/ui/typography"
+import Image from "next/image"
 
 import TimeAgo from "@/components/TimeAgo"
+import Card from "@/components/ui/card"
 
 import { Job } from "@/models/Job"
 
-import { faHeart } from "@fortawesome/free-solid-svg-icons"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import Image from "next/image"
+import Button from "@/components/ui/button"
+import Icon from "@/components/Icon"
+import { redirect } from "next/navigation"
 
 export default function JobCard({ jobDoc }: { jobDoc: Job }) {
   return (
-    <div className="bg-white p-4 rounded-lg shadow-sm relative">
-      <div className="absolute cursor-pointer top-4 right-4">
-        <FontAwesomeIcon className="size-4 text-gray-300" icon={faHeart} />
-      </div>
+    <Card
+      href={`/post/${jobDoc._id}`}
+      className="border card-shadow grid [grid-template-columns:auto_1fr] gap-4 w-full sm:min-w-[36rem]"
+    >
+      <span
+        className="size-10 rounded-full flex justify-center items-center border border-gray-950/5 dark:border-white/5"
+        style={{ background: "#F97316" }}
+      >
+        <Image src={jobDoc?.jobIcon} width={200} height={200} priority={true} className="text-white size-6" alt="" />
+      </span>
 
-      <div className="flex grow gap-4">
-        <div className="content-center w-12 basis-12 shrink-0">
-          <Image
-            src={jobDoc?.jobIcon}
-            width={200}
-            height={200}
-            priority={true}
-            className="!size-12 rounded-sm"
-            alt={`${jobDoc.title} of image`}
-          />
-        </div>
+      <div>
+        <div className="flex items-center gap-1.5">
+          <span className="text-[--body-text-color] text-sm font-medium my-0 block capitalize">{jobDoc.orgName}</span>
 
-        <div className="grow sm:flex">
-          <div className="grow">
-            <div>
-              <Link href={`/jobs/${jobDoc.orgId}`} className="hover:underline text-gray-500 text-sm">
-                {jobDoc.orgName || "?"}
-              </Link>
-            </div>
-            <div className="font-bold text-lg mb-1">
-              <Link className="hover:underline" href={"/post/" + jobDoc._id}>
-                {jobDoc.title}
-              </Link>
-            </div>
-            <div className="text-gray-400 text-sm capitalize">
-              {jobDoc.remote} &middot; {jobDoc.city}, {jobDoc.country} &middot; {jobDoc.type}-time
-              {jobDoc.isAdmin && (
-                <>
-                  {" "}
-                  &middot; <Link href={"/jobs/edit/" + jobDoc._id}>Edit</Link> &middot;{" "}
-                  <button
-                    type="button"
-                    onClick={async () => {
-                      await axios.delete("/api/jobs?id=" + jobDoc._id)
-                      window.location.reload()
-                    }}
-                  >
-                    Delete
-                  </button>
-                </>
-              )}
-            </div>
-          </div>
+          <span className="block size-1 rounded-full bg-[--ui-border-color]"></span>
+
           {jobDoc.createdAt && (
-            <div className="content-end text-gray-500 text-sm">
+            <span className="text-[--caption-text-color] text-sm font-normal">
               <TimeAgo createdAt={jobDoc.createdAt} />
-            </div>
+            </span>
+          )}
+        </div>
+        <div className="block text-[--title-text-color] text-base font-medium my-1.5">{jobDoc.title}</div>
+        <div className="flex flex-wrap gap-1.5 items-center">
+          <p className="capitalize text-[--caption-text-color] text-sm font-normal flex items-center gap-1.5">
+            <Icon name="map-pin" className="size-3.5" />
+            {jobDoc.remote} &middot; {jobDoc.city}, {jobDoc.country}
+          </p>
+
+          <span className="block size-1 rounded-full bg-[--ui-border-color]"></span>
+
+          <p className="text-[--caption-text-color] capitalize text-sm font-normal flex items-center gap-1.5">
+            <Icon name="clock" className="size-3.5" />
+            {jobDoc.type} time
+          </p>
+
+          <span className="block size-1 rounded-full bg-[--ui-border-color]"></span>
+          <p className="text-[--caption-text-color] text-sm font-normal flex items-center gap-1.5">
+            <Icon name="credit-card" className="size-3.5" />${jobDoc.salary}
+          </p>
+
+          {jobDoc.isAdmin && (
+            <>
+              {" "}
+              &middot;
+              <Button.Root
+                size="xs"
+                variant="ghost"
+                onClick={async () => {
+                  redirect(`/jobs/edit/${jobDoc._id}`)
+                }}
+              >
+                <Button.Label>Edit</Button.Label>
+              </Button.Root>
+              &middot;{" "}
+              <Button.Root
+                size="xs"
+                variant="ghost"
+                onClick={async () => {
+                  await axios.delete("/api/jobs?id=" + jobDoc._id)
+                  window.location.reload()
+                }}
+              >
+                <Button.Label>Delete</Button.Label>
+              </Button.Root>
+            </>
           )}
         </div>
       </div>
-    </div>
+    </Card>
   )
 }
