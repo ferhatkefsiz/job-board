@@ -1,23 +1,14 @@
 "use client"
 
 import { ChangeEvent, useRef, useState } from "react"
+import axios from "axios"
 import Image from "next/image"
 
-import axios from "axios"
-import { Button } from "@radix-ui/themes"
+import Button from "@/components/ui/button"
+import Icon from "@/components/Icon"
+import Card from "./ui/card"
 
-import { faSpinner, IconDefinition } from "@fortawesome/free-solid-svg-icons"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-
-export default function ImageUpload({
-  name,
-  icon,
-  defaultValue = ""
-}: {
-  name: string
-  icon: IconDefinition
-  defaultValue: string
-}) {
+export default function ImageUpload({ name, defaultValue = "" }: { name: string; defaultValue: string }) {
   const fileInRef = useRef<HTMLInputElement>(null)
   const [isUploading, setIsUploading] = useState(false)
   const [isImageLoading, setIsImageLoading] = useState(false)
@@ -46,8 +37,8 @@ export default function ImageUpload({
 
   return (
     <>
-      <div className="bg-gray-100 rounded-md size-24 inline-flex items-center content-center justify-center">
-        {imgLoading && <FontAwesomeIcon icon={faSpinner} className="text-gray-400 animate-spin" />}
+      <Card className="rounded-md size-24 inline-flex items-center content-center justify-center">
+        {imgLoading && <Icon name={"loader"} className="text-gray-400 animate-spin" />}
 
         {!isUploading && url && (
           <Image
@@ -60,16 +51,16 @@ export default function ImageUpload({
           />
         )}
 
-        {!imgLoading && !url && <FontAwesomeIcon icon={icon} className="text-gray-400" />}
-      </div>
+        {!imgLoading && !url && <Icon name={"star"} className="text-gray-400" />}
+      </Card>
 
       <input type="hidden" value={url} name={name} />
 
       <div className="mt-2">
         <input onChange={(ev) => upload(ev)} ref={fileInRef} type="file" className="hidden" />
-        <Button type="button" onClick={() => fileInRef.current?.click()} variant="soft">
-          select file
-        </Button>
+        <Button.Root onClick={() => fileInRef.current?.click()} variant="soft">
+          <Button.Label>select file</Button.Label>
+        </Button.Root>
       </div>
     </>
   )
