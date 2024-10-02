@@ -1,3 +1,5 @@
+import ScrollArea from "@/components/ui/scroll-area"
+import { Text } from "@/components/ui/typography"
 import { JobModel } from "@/models/Job"
 import mongoose from "mongoose"
 import Image from "next/image"
@@ -34,7 +36,13 @@ export default async function SingleJobPage(props: PageProps) {
         </div>
       </div>
 
-      <div className="whitespace-pre-line text-sm text-gray-600">{jobDoc.description}</div>
+      <ScrollArea.Root className="min-h-14 max-h-96 px-4">
+        <ScrollArea.Viewport className="w-full">
+          <Text className="w-full text-wrap flex text-sm text-gray-600">{jobDoc.description}</Text>
+        </ScrollArea.Viewport>
+        <ScrollArea.Scrollbar orientation="vertical" />
+        <ScrollArea.Scrollbar orientation="horizontal" />
+      </ScrollArea.Root>
 
       <div className="mt-4 bg-gray-200 p-8 rounded-lg">
         <h3 className="font-bold mb-2">Apply by contacting us</h3>
