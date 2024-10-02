@@ -10,7 +10,6 @@ import { ThemeProvider } from "@/providers/theme-provider"
 import { cn } from "@/utils/className"
 
 import "./globals.css"
-import "@radix-ui/themes/styles.css"
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
