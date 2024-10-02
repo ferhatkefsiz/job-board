@@ -1,3 +1,89 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+@layer base {
+  :root {
+    --sidebar-width: 16rem;
+  }
+
+  :root {
+    --card-padding: theme("spacing[6]");
+    --card-radius: theme("spacing[2]");
+    --accordion-padding: theme("spacing[4]");
+    --feedback-padding: var(--card-padding);
+    --toast-padding: theme("spacing[4]");
+    --radius: 0.5rem;
+  }
+}
+
+@layer base {
+  :root {
+    --display-text-color: theme(colors.gray.950);
+    --title-text-color: var(--display-text-color);
+    --caption-text-color: theme(colors.gray.500);
+    --body-text-color: theme(colors.gray.700);
+    --placeholder-text-color: theme(colors.gray.400);
+  }
+}
+
+@layer base {
+  .dark {
+    --display-text-color: theme(colors.white);
+    --title-text-color: var(--display-text-color);
+    --caption-text-color: theme(colors.gray.500);
+    --body-text-color: theme(colors.gray.300);
+    --placeholder-text-color: theme(colors.gray.600);
+  }
+}
+
+@keyframes animation-16i29iq {
+  0% {
+    opacity: 0;
+    transform: translateY(-5px);
+    max-height: 0px;
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0px);
+    max-height: 6rem;
+  }
+}
+
+.errorAnimation {
+  transition-property: height;
+  transition-duration: 200ms;
+  transition-timing-function: ease;
+  animation: 450ms ease 0s 1 normal none running animation-16i29iq;
+}
+
+@media (max-width: 768px) {
+  /* Disable Auto Zoom in Input "Text" tag - Safari on iPhone */
+
+  @layer base {
+    input[type="color"],
+    input[type="date"],
+    input[type="datetime"],
+    input[type="datetime-local"],
+    input[type="email"],
+    input[type="month"],
+    input[type="number"],
+    input[type="password"],
+    input[type="search"],
+    input[type="tel"],
+    input[type="text"],
+    input[type="time"],
+    input[type="url"],
+    input[type="week"],
+    select:focus,
+    textarea {
+      font-size: 16px;
+    }
+  }
+}
