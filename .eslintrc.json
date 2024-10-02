@@ -6,5 +6,8 @@
       "callees": ["cn", "cva"],
       "config": "tailwind.config.ts"
     }
+  },
+  "rules": {
+    "react/display-name": "off"
   }
 }
