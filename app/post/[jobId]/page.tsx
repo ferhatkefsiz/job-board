@@ -1,3 +1,4 @@
+import Card from "@/components/ui/card"
 import ScrollArea from "@/components/ui/scroll-area"
 import { Text } from "@/components/ui/typography"
 import { JobModel } from "@/models/Job"
@@ -44,27 +45,29 @@ export default async function SingleJobPage(props: PageProps) {
         <ScrollArea.Scrollbar orientation="horizontal" />
       </ScrollArea.Root>
 
-      <div className="mt-4 bg-gray-200 p-8 rounded-lg">
+      <Card className="mt-4 rounded-lg">
         <h3 className="font-bold mb-2">Apply by contacting us</h3>
 
-        <div className="flex gap-4">
-          <Image
-            src={jobDoc.contactPhoto}
-            alt={"contact person"}
-            width={500}
-            height={500}
-            className="w-auto h-auto max-w-24 max-h-24"
-          />
+        <div className="flex mt-4 gap-4">
+          {jobDoc.contactPhoto && (
+            <Image
+              src={jobDoc.contactPhoto}
+              alt={"contact person"}
+              width={500}
+              height={500}
+              className="w-auto h-auto max-w-24 max-h-24"
+            />
+          )}
 
           <div className="flex content-center items-center">
-            {jobDoc.contactName}
+            Name: {jobDoc.contactName}
             <br />
             Email: {jobDoc.contactEmail}
             <br />
             Phone: {jobDoc.contactPhone}
           </div>
         </div>
-      </div>
+      </Card>
     </div>
   )
 }
