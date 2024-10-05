@@ -7,6 +7,7 @@ import { WorkOS } from "@workos-inc/node"
 
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import Button from "@/components/ui/button"
 
 export default async function OrganizationsListPage() {
   const workos = new WorkOS(process.env.WORKOS_API_KEY)
@@ -62,13 +63,12 @@ export default async function OrganizationsListPage() {
           </div>
         )}
 
-        <Link
+        <Button.Root
           className="inline-flex gap-2 items-center bg-gray-200 px-4 py-2 rounded-md mt-6"
           href={"/create-organization"}
         >
-          Create a new organization
-          <FontAwesomeIcon className="h-4" icon={faArrowRight} />
-        </Link>
+          <Button.Label>Create a new organization</Button.Label>
+        </Button.Root>
       </div>
     </div>
   )
