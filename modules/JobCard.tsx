@@ -40,22 +40,22 @@ export default function JobCard({ jobDoc }: { jobDoc: Job }) {
         </div>
         <div className="block text-[--title-text-color] text-base font-medium my-1.5">{jobDoc.title}</div>
         <div className="flex flex-wrap gap-1.5 items-center">
-          <p className="capitalize text-[--caption-text-color] text-sm font-normal flex items-center gap-1.5">
+          <div className="capitalize text-[--caption-text-color] text-sm font-normal flex items-center gap-1.5">
             <Icon name="map-pin" className="size-3.5" />
             {jobDoc.remote} &middot; {jobDoc.city}, {jobDoc.country}
-          </p>
+          </div>
 
           <span className="block size-1 rounded-full bg-[--ui-border-color]"></span>
 
-          <p className="text-[--caption-text-color] capitalize text-sm font-normal flex items-center gap-1.5">
+          <div className="text-[--caption-text-color] capitalize text-sm font-normal flex items-center gap-1.5">
             <Icon name="clock" className="size-3.5" />
             {jobDoc.type} time
-          </p>
+          </div>
 
           <span className="block size-1 rounded-full bg-[--ui-border-color]"></span>
-          <p className="text-[--caption-text-color] text-sm font-normal flex items-center gap-1.5">
+          <div className="text-[--caption-text-color] text-sm font-normal flex items-center gap-1.5">
             <Icon name="credit-card" className="size-3.5" />${jobDoc.salary}
-          </p>
+          </div>
 
           {jobDoc.isAdmin && (
             <>
